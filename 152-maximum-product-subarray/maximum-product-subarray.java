@@ -5,16 +5,26 @@ class Solution {
         // and a suffix product (similar to suffix sum)
         // and when 0 occurs set product = 1
 
-        int max=Integer.MIN_VALUE; int pre=1,suff=1;
+        int maxi=Integer.MIN_VALUE; int pre=1,suff=1;
+
+        int prod=1;
 
         for(int i=0;i<nums.length;i++)
         {
-            if (pre==0) pre=1; if(suff==0) suff=1;
-            pre*=nums[i];
-            suff*=nums[nums.length-1-i];
-            max=Math.max(max,Math.max(pre,suff));
+          prod*=nums[i];
+          maxi=Math.max(prod,maxi);
+          if(prod==0)
+           prod=1;
         }
+        prod=1;
+        for(int i=nums.length-1;i>=0;i--)
+        {
+          prod*=nums[i];
 
-        return max;
+          maxi=Math.max(prod,maxi);
+          if(prod==0)
+           prod=1;
+        }
+        return maxi;
     }
 }
