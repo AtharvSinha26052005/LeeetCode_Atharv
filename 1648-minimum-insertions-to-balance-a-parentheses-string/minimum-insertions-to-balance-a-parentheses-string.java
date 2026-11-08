@@ -1,30 +1,33 @@
 class Solution {
-
     public int minInsertions(String s) {
-        int insertions = 0;
-        int leftCount = 0;
-        int length = s.length();
-        int index = 0;
-        while (index < length) {
-            char c = s.charAt(index);
-            if (c == '(') {
-                leftCount++;
-                index++;
-            } else {
-                if (leftCount > 0) {
-                    leftCount--;
-                } else {
-                    insertions++;
+        Stack<Character> st = new Stack<>();
+        int res = 0;
+        for(int i=0;i<s.length();i++) {
+            char ch = s.charAt(i);
+            if(ch == '(') {
+                st.push(ch);
+            }
+            else {
+                if(st.isEmpty()) {
+                    if(i < s.length()-1 && s.charAt(i+1) == ')') {
+                        i++;
+                    }
+                    else {
+                        res++;
+                    }
+                    res++;
                 }
-                if (index < length - 1 && s.charAt(index + 1) == ')') {
-                    index += 2;
-                } else {
-                    insertions++;
-                    index++;
+                else {
+                    if(i < s.length()-1 && s.charAt(i+1) == ')') {
+                        i++;
+                    }
+                    else {
+                        res++;
+                    }
+                    st.pop();
                 }
             }
         }
-        insertions += leftCount * 2;
-        return insertions;
+        return res+st.size()*2;
     }
 }
